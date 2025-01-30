@@ -32,7 +32,7 @@ public class UtilityController : BaseController
 
     [HttpPost]
     [Route("seed-data")]
-    //[Authorize(Policy = Policies.AdministratorUser)]
+    [Authorize(Policy = Policies.AdministratorUser)]
     public async Task<IActionResult> SeedData()
     {
         await db.SeedData(userManager, roleManager);
