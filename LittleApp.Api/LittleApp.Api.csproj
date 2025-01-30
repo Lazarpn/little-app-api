@@ -4,6 +4,8 @@
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>b79f6100-048a-487d-8340-c09741048493</UserSecretsId>
     <!--<ImplicitUsings>enable</ImplicitUsings>-->
   </PropertyGroup>
 

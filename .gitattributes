@@ -1,0 +1,17 @@
+* text eol=lf
+*.eot binary
+*.otf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.jpg binary
+*.webp binary
+*.webm binary
+*.png binary
+*.gif binary
+*.pdf binary
+*.ico binary
+*.dll binary
+*.mp3 binary
+*.mp4 binary
+*.wav binary
