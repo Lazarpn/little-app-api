@@ -35,6 +35,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.Extensions.Hosting;
+using LittleApp.Common.Helpers;
 
 Logger logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Info("App: Starting Application");
@@ -49,6 +50,50 @@ try
         .AddIdentity<User, Role>()
         .AddEntityFrameworkStores<LittleAppDbContext>()
         .AddDefaultTokenProviders();
+
+    builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    var jwtHelper = new JwtHelper(builder.Configuration);
+                    var isTokenValid = jwtHelper.VerifyToken(accessToken);
+
+                    if (isTokenValid)
+                    {
+                        context.Token = accessToken;
+                    }
+                }
+
+                return Task.CompletedTask;
+            }
+        };
+
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = builder.Configuration["jwtIssuer"],
+            ValidateIssuer = true,
+            ValidAudience = builder.Configuration["jwtAudience"],
+            ValidateAudience = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwtKey"])),
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true
+        };
+    });
 
     builder.Services.AddAuthorization(options =>
     {

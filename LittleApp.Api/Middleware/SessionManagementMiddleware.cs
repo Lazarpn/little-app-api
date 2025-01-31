@@ -9,6 +9,7 @@ using Microsoft.Net.Http.Headers;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace LittleApp.Common.Middleware;
