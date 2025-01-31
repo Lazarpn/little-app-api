@@ -41,6 +41,9 @@ public class User : IdentityUser<Guid>, IEntity
     public DateTime CreatedAt { get; set; }
     public DateTime? ModifiedAt { get; set; }
 
+    [InverseProperty(nameof(Task.User))]
+    public virtual ICollection<Task> Tasks { get; set; } = new HashSet<Task>();
+
     public virtual ICollection<UserClaim> Claims { get; set; } = new HashSet<UserClaim>();
     public virtual ICollection<UserLogin> Logins { get; set; } = new HashSet<UserLogin>();
     public virtual ICollection<UserToken> Tokens { get; set; } = new HashSet<UserToken>();

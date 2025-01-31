@@ -3,6 +3,7 @@ using System;
 using LittleApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LittleApp.Data.Migrations
 {
     [DbContext(typeof(LittleAppDbContext))]
-    partial class LittleAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131194908_Task")]
+    partial class Task
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +69,14 @@ namespace LittleApp.Data.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("RoleId1")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
@@ -126,9 +134,14 @@ namespace LittleApp.Data.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("RoleId1")
+                        .HasColumnType("uuid");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
 
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
@@ -295,11 +308,15 @@ namespace LittleApp.Data.Migrations
 
             modelBuilder.Entity("LittleApp.Entities.Identity.RoleClaim", b =>
                 {
-                    b.HasOne("LittleApp.Entities.Identity.Role", "Role")
-                        .WithMany("RoleClaims")
+                    b.HasOne("LittleApp.Entities.Identity.Role", null)
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LittleApp.Entities.Identity.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId1");
 
                     b.Navigation("Role");
                 });
@@ -328,11 +345,15 @@ namespace LittleApp.Data.Migrations
 
             modelBuilder.Entity("LittleApp.Entities.Identity.UserRole", b =>
                 {
-                    b.HasOne("LittleApp.Entities.Identity.Role", "Role")
-                        .WithMany("UserRoles")
+                    b.HasOne("LittleApp.Entities.Identity.Role", null)
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("LittleApp.Entities.Identity.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId1");
 
                     b.HasOne("LittleApp.Entities.User", "User")
                         .WithMany("UserRoles")

@@ -1,4 +1,4 @@
-﻿using LittleApp.Common.Enums;
+using LittleApp.Common.Enums;
 using LittleApp.Entities;
 using LittleApp.Entities.Identity;
 using LittleApp.Entities.Interfaces;
@@ -16,6 +16,8 @@ namespace LittleApp.Data;
 
 public class LittleAppDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {
+    public virtual DbSet<Entities.Task> Tasks { get; set; }
+
     public LittleAppDbContext(DbContextOptions<LittleAppDbContext> options) : base(options)
     {
         Database.Migrate();
@@ -24,6 +26,21 @@ public class LittleAppDbContext : IdentityDbContext<User, Role, Guid, UserClaim,
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasMany(r => r.UserRoles)
+                .WithOne(ur => ur.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+
+            entity.HasMany(r => r.RoleClaims)
+                .WithOne(rc => rc.Role)
+                .HasForeignKey(rc => rc.RoleId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+        });
 
         modelBuilder.Entity<User>(entity =>
         {
@@ -90,7 +107,7 @@ public class LittleAppDbContext : IdentityDbContext<User, Role, Guid, UserClaim,
         }
     }
 
-    public async Task SeedData(UserManager<User> userManager, RoleManager<Role> roleManager)
+    public async System.Threading.Tasks.Task SeedData(UserManager<User> userManager, RoleManager<Role> roleManager)
     {
         Role[] roles =
         {

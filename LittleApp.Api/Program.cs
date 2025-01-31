@@ -77,7 +77,7 @@ try
                     }
                 }
 
-                return Task.CompletedTask;
+                return System.Threading.Tasks.Task.CompletedTask;
             }
         };
 
@@ -111,7 +111,7 @@ try
 
     logger.Info("App: Configuring services");
     builder.Services.AddScoped<AccountManager>();
-
+    builder.Services.AddScoped<TaskManager>();
 
     logger.Info("App: Configuring forwarded headers");
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
