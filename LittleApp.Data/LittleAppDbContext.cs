@@ -17,6 +17,7 @@ namespace LittleApp.Data;
 public class LittleAppDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {
     public virtual DbSet<Entities.Task> Tasks { get; set; }
+    public virtual DbSet<Memory> Memories { get; set; }
 
     public LittleAppDbContext(DbContextOptions<LittleAppDbContext> options) : base(options)
     {

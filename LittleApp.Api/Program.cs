@@ -112,6 +112,7 @@ try
     logger.Info("App: Configuring services");
     builder.Services.AddScoped<AccountManager>();
     builder.Services.AddScoped<TaskManager>();
+    builder.Services.AddScoped<MemoryManager>();
 
     logger.Info("App: Configuring forwarded headers");
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
