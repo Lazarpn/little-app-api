@@ -26,7 +26,7 @@ public class TaskManager
 
     public async Task<List<TaskModel>> GetTasks(Guid userId)
     {
-        var query = db.Tasks.Where(t => t.UserId == userId).OrderBy(t => t.Order);
+        var query = db.Tasks.OrderBy(t => t.Order);
         var tasks = await mapper.ProjectTo<TaskModel>(query).ToListAsync();
         return tasks;
     }
