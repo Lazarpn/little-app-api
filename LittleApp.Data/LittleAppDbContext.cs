@@ -18,6 +18,7 @@ public class LittleAppDbContext : IdentityDbContext<User, Role, Guid, UserClaim,
 {
     public virtual DbSet<Entities.Task> Tasks { get; set; }
     public virtual DbSet<Memory> Memories { get; set; }
+    public virtual DbSet<Vote> Votes { get; set; }
 
     public LittleAppDbContext(DbContextOptions<LittleAppDbContext> options) : base(options)
     {

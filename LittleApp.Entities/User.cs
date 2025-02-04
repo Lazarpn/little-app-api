@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LittleApp.Common.Enums;
 
 namespace LittleApp.Entities;
 
@@ -40,6 +41,9 @@ public class User : IdentityUser<Guid>, IEntity
 
     public DateTime CreatedAt { get; set; }
     public DateTime? ModifiedAt { get; set; }
+
+    [InverseProperty(nameof(Vote.User))]
+    public virtual ICollection<Vote> Votes { get; set; } = new HashSet<Vote>();
 
     [InverseProperty(nameof(Task.User))]
     public virtual ICollection<Task> Tasks { get; set; } = new HashSet<Task>();

@@ -113,6 +113,7 @@ try
     builder.Services.AddScoped<AccountManager>();
     builder.Services.AddScoped<TaskManager>();
     builder.Services.AddScoped<MemoryManager>();
+    builder.Services.AddScoped<VoteManager>();
 
     logger.Info("App: Configuring forwarded headers");
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
