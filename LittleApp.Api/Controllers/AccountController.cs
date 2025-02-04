@@ -27,18 +27,18 @@ public class AccountController : BaseController
         jwtHelper = new JwtHelper(configuration);
     }
 
-    /// <summary>
-    /// Registers and logins a new user using passed credentials
-    /// </summary>
-    /// <param name="model">User registration info</param>
-    /// <returns>Login information</returns>
-    [HttpPost("register")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponseModel))]
-    public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
-    {
-        var authResponse = await accountManager.Register(model);
-        return Ok(authResponse);
-    }
+    ///// <summary>
+    ///// Registers and logins a new user using passed credentials
+    ///// </summary>
+    ///// <param name="model">User registration info</param>
+    ///// <returns>Login information</returns>
+    //[HttpPost("register")]
+    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponseModel))]
+    //public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
+    //{
+    //    var authResponse = await accountManager.Register(model);
+    //    return Ok(authResponse);
+    //}
 
     /// <summary>
     /// User login
